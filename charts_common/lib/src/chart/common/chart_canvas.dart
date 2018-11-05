@@ -63,13 +63,14 @@ abstract class ChartCanvas {
   /// pattern will be repeated to derive an even number of values. "1,2,3" is
   /// equivalent to "1,2,3,1,2,3."
   void drawLine(
-      {required List<Point> points,
-      Rectangle<num>? clipBounds,
-      Color? fill,
-      Color? stroke,
-      bool? roundEndCaps,
-      double? strokeWidthPx,
-      List<int>? dashPattern});
+      {List<Point> points,
+      Rectangle<num> clipBounds,
+      Color fill,
+      Color stroke,
+      bool smoothLine,
+      bool roundEndCaps,
+      double strokeWidthPx,
+      List<int> dashPattern});
 
   /// Renders a pie, with an optional hole in the center.
   void drawPie(CanvasPie canvasPie);

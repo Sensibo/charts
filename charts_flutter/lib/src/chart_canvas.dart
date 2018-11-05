@@ -72,20 +72,23 @@ class ChartCanvas implements common.ChartCanvas {
 
   @override
   void drawLine(
-      {required List<Point> points,
-      Rectangle<num>? clipBounds,
-      common.Color? fill,
-      common.Color? stroke,
-      bool? roundEndCaps,
-      double? strokeWidthPx,
-      List<int>? dashPattern}) {
-    LinePainter.draw(
+      {List<Point> points,
+      Rectangle<num> clipBounds,
+      common.Color fill,
+      common.Color stroke,
+      bool smoothLine,
+      bool roundEndCaps,
+      double strokeWidthPx,
+      List<int> dashPattern}) {
+    _linePainter ??= new LinePainter();
+    _linePainter.draw(
         canvas: canvas,
         paint: _paint,
         points: points,
         clipBounds: clipBounds,
         fill: fill,
         stroke: stroke,
+        smoothLine: smoothLine,
         roundEndCaps: roundEndCaps,
         strokeWidthPx: strokeWidthPx,
         dashPattern: dashPattern);
