@@ -119,19 +119,22 @@ class ChartCanvas implements common.ChartCanvas {
 
   @override
   void drawPolygon(
-      {required List<Point> points,
-      Rectangle<num>? clipBounds,
-      common.Color? fill,
-      common.Color? stroke,
-      double? strokeWidthPx}) {
-    PolygonPainter.draw(
+      {List<Point> points,
+      Rectangle<num> clipBounds,
+      common.Color fill,
+      common.Color stroke,
+      double strokeWidthPx,
+      bool smoothLine = false }) {
+    _polygonPainter ??= new PolygonPainter();
+    _polygonPainter.draw(
         canvas: canvas,
         paint: _paint,
         points: points,
         clipBounds: clipBounds,
         fill: fill,
         stroke: stroke,
-        strokeWidthPx: strokeWidthPx);
+        strokeWidthPx: strokeWidthPx,
+        smoothLine: smoothLine);
   }
 
   /// Creates a bottom to top gradient that transitions [fill] to transparent.

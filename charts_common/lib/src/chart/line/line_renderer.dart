@@ -960,8 +960,10 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           if (area != null) {
             canvas.drawPolygon(
                 clipBounds: _getClipBoundsForExtent(area.positionExtent),
-                fill: area.areaColor ?? area.color,
-                points: area.points.toPoints());
+                fill: area.color,
+                points: area.points,
+                smoothLine: config.smoothLine
+            );
           }
         });
       }
