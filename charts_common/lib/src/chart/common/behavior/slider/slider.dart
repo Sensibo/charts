@@ -118,6 +118,8 @@ class Slider<D> implements ChartBehavior<D> {
   /// This should be set any time the state of the slider has changed.
   SliderListenerDragState _dragStateToFireOnPostRender;
 
+  bool tapAnywhereToMove;
+
   /// Constructs a [Slider].
   ///
   /// [eventTrigger] sets the type of gesture handled by the slider.
@@ -152,7 +154,8 @@ class Slider<D> implements ChartBehavior<D> {
       String roleId,
       this.snapToDatum = false,
       SliderStyle style,
-      this.layoutPaintOrder = LayoutViewPaintOrder.slider}) {
+      this.layoutPaintOrder = LayoutViewPaintOrder.slider,
+      this.tapAnywhereToMove = false}) {
     _handleRenderer = handleRenderer ?? RectSymbolRenderer();
     _roleId = roleId ?? '';
     _style = style ?? SliderStyle();
@@ -207,7 +210,7 @@ class Slider<D> implements ChartBehavior<D> {
 
   bool _onTapTest(Point<double> chartPoint) {
     _delaySelect = eventTrigger == SelectionTrigger.longPressHold;
-    _handleDrag = _sliderContainsPoint(chartPoint);
+    _handleDrag = tapAnywhereToMove || _sliderContainsPoint(chartPoint);
     return _handleDrag;
   }
 
