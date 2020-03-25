@@ -81,6 +81,8 @@ class Slider<D> extends ChartBehavior<D> {
   /// Renderer for the handle. Defaults to a rectangle.
   final common.SymbolRenderer? handleRenderer;
 
+  bool tapAnywhereToMove;
+
   Slider._internal(
       {required this.eventTrigger,
       this.onChangeCallback,
@@ -90,7 +92,8 @@ class Slider<D> extends ChartBehavior<D> {
       this.style,
       this.handleRenderer,
       required this.desiredGestures,
-      this.layoutPaintOrder});
+      this.layoutPaintOrder,
+      this.tapAnywhereToMove});
 
   /// Constructs a [Slider].
   ///
@@ -121,7 +124,8 @@ class Slider<D> extends ChartBehavior<D> {
       common.SliderListenerCallback? onChangeCallback,
       bool snapToDatum = false,
       common.SliderStyle? style,
-      int layoutPaintOrder = common.LayoutViewPaintOrder.slider}) {
+      int layoutPaintOrder = common.LayoutViewPaintOrder.slider,
+      bool tapAnywhereToMove}) {
     eventTrigger ??= common.SelectionTrigger.tapAndDrag;
     handleRenderer ??= new common.RectSymbolRenderer();
     // Default the handle size large enough to tap on a mobile device.
@@ -135,7 +139,8 @@ class Slider<D> extends ChartBehavior<D> {
         snapToDatum: snapToDatum,
         style: style,
         desiredGestures: Slider._getDesiredGestures(eventTrigger),
-        layoutPaintOrder: layoutPaintOrder);
+        layoutPaintOrder: layoutPaintOrder,
+        tapAnywhereToMove: tapAnywhereToMove);
   }
 
   static Set<GestureType> _getDesiredGestures(
@@ -169,7 +174,8 @@ class Slider<D> extends ChartBehavior<D> {
       onChangeCallback: onChangeCallback,
       roleId: roleId,
       snapToDatum: snapToDatum,
-      style: style);
+      style: style,
+      tapAnywhereToMove: tapAnywhereToMove);
 
   @override
   void updateCommonBehavior(common.ChartBehavior<D> commonBehavior) {}
@@ -187,12 +193,13 @@ class Slider<D> extends ChartBehavior<D> {
         roleId == o.roleId &&
         snapToDatum == o.snapToDatum &&
         style == o.style &&
-        layoutPaintOrder == o.layoutPaintOrder;
+        layoutPaintOrder == o.layoutPaintOrder &&
+        tapAnywhereToMove == tapAnywhereToMove;
   }
 
   @override
   int get hashCode {
     return hashValues(eventTrigger, handleRenderer, initialDomainValue, roleId,
-        snapToDatum, style, layoutPaintOrder);
+        snapToDatum, style, layoutPaintOrder, tapAnywhereToMove);
   }
 }
