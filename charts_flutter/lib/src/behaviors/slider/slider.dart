@@ -125,7 +125,7 @@ class Slider<D> extends ChartBehavior<D> {
       bool snapToDatum = false,
       common.SliderStyle? style,
       int layoutPaintOrder = common.LayoutViewPaintOrder.slider,
-      bool tapAnywhereToMove}) {
+      bool tapAnywhereToMove = false}) {
     eventTrigger ??= common.SelectionTrigger.tapAndDrag;
     handleRenderer ??= new common.RectSymbolRenderer();
     // Default the handle size large enough to tap on a mobile device.
