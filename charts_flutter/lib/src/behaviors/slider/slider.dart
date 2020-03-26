@@ -127,7 +127,7 @@ class Slider extends ChartBehavior<common.Slider> {
       bool snapToDatum = false,
       common.SliderStyle style,
       int layoutPaintOrder = common.LayoutViewPaintOrder.slider,
-      bool tapAnywhereToMove = false
+      bool tapAnywhereToMove = false,
       common.Slider commonBehavior}) {
     eventTrigger ??= common.SelectionTrigger.tapAndDrag;
     handleRenderer ??= new common.RectSymbolRenderer();
