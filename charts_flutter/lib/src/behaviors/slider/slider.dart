@@ -83,6 +83,8 @@ class Slider<D> extends ChartBehavior<D> {
 
   bool tapAnywhereToMove;
 
+  common.Slider<D>? commonBehavior;
+
   Slider._internal(
       {required this.eventTrigger,
       this.onChangeCallback,
@@ -93,7 +95,8 @@ class Slider<D> extends ChartBehavior<D> {
       this.handleRenderer,
       required this.desiredGestures,
       this.layoutPaintOrder,
-      this.tapAnywhereToMove});
+      required this.tapAnywhereToMove,
+      this.commonBehavior});
 
   /// Constructs a [Slider].
   ///
@@ -125,7 +128,8 @@ class Slider<D> extends ChartBehavior<D> {
       bool snapToDatum = false,
       common.SliderStyle? style,
       int layoutPaintOrder = common.LayoutViewPaintOrder.slider,
-      bool tapAnywhereToMove = false}) {
+      bool tapAnywhereToMove = false,
+      common.Slider<D>? commonBehavior}) {
     eventTrigger ??= common.SelectionTrigger.tapAndDrag;
     handleRenderer ??= new common.RectSymbolRenderer();
     // Default the handle size large enough to tap on a mobile device.
@@ -140,7 +144,8 @@ class Slider<D> extends ChartBehavior<D> {
         style: style,
         desiredGestures: Slider._getDesiredGestures(eventTrigger),
         layoutPaintOrder: layoutPaintOrder,
-        tapAnywhereToMove: tapAnywhereToMove);
+        tapAnywhereToMove: tapAnywhereToMove,
+        commonBehavior: commonBehavior);
   }
 
   static Set<GestureType> _getDesiredGestures(
@@ -167,7 +172,8 @@ class Slider<D> extends ChartBehavior<D> {
   }
 
   @override
-  common.Slider<D> createCommonBehavior() => new common.Slider<D>(
+  common.Slider<D> createCommonBehavior() {
+    commonBehavior ??= new common.Slider<D>(
       eventTrigger: eventTrigger,
       handleRenderer: handleRenderer,
       initialDomainValue: initialDomainValue as D,
@@ -175,7 +181,10 @@ class Slider<D> extends ChartBehavior<D> {
       roleId: roleId,
       snapToDatum: snapToDatum,
       style: style,
-      tapAnywhereToMove: tapAnywhereToMove);
+      tapAnywhereToMove: tapAnywhereToMove
+    );
+    return commonBehavior as common.Slider<D>;
+  }
 
   @override
   void updateCommonBehavior(common.ChartBehavior<D> commonBehavior) {}
