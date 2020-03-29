@@ -23,6 +23,8 @@ import 'package:flutter/material.dart'
         ScaleEndDetails,
         ScaleStartDetails,
         ScaleUpdateDetails,
+        DragStartDetails,
+        DragUpdateDetails,
         TapDownDetails,
         TapUpDetails;
 
@@ -68,6 +70,8 @@ class ChartGestureDetector {
       onTapUp: wantTap ? onTapUp : null,
       onScaleStart: wantDrag ? onScaleStart : null,
       onScaleUpdate: wantDrag ? onScaleUpdate : null,
+      onHorizontalDragStart: wantDrag ? onDragStart : null,
+      onHorizontalDragUpdate: wantDrag ? onDragUpdate : null,
       onScaleEnd: wantDrag ? onScaleEnd : null,
     );
   }
@@ -76,7 +80,7 @@ class ChartGestureDetector {
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.globalPosition);
     _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
-    container.gestureProxy.onTapTest(_lastTapPoint!);
+    _isDragging = container.gestureProxy.onTapTest(_lastTapPoint!);
 
     // Kick off a timer to see if this is a LongPress.
     if (_listeningForLongPress) {
@@ -98,7 +102,7 @@ class ChartGestureDetector {
 
   void onLongPress() {
     final container = _containerResolver();
-    container.gestureProxy.onLongPress(_lastTapPoint!);
+    _isDragging = container.gestureProxy.onLongPress(_lastTapPoint!);
   }
 
   void onScaleStart(ScaleStartDetails d) {
@@ -122,6 +126,28 @@ class ChartGestureDetector {
     _lastScale = d.scale;
 
     container.gestureProxy.onDragUpdate(_lastTapPoint!, d.scale);
+  }
+
+  void onDragStart(DragStartDetails d) {
+    _longPressTimer?.cancel();
+
+    final container = _containerResolver();
+    final localPosition = d.localPosition;
+    _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
+
+    _isDragging = container.gestureProxy.onDragStart(_lastTapPoint!);
+  }
+
+  void onDragUpdate(DragUpdateDetails d) {
+    if (!_isDragging) {
+      return;
+    }
+
+    final container = _containerResolver();
+    final localPosition = d.localPosition;
+    _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
+
+    container.gestureProxy.onDragUpdate(_lastTapPoint!, 1);
   }
 
   void onScaleEnd(ScaleEndDetails d) {
