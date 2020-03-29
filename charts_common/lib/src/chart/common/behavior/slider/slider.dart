@@ -94,8 +94,6 @@ class Slider<D> implements ChartBehavior<D> {
 
   bool _delaySelect = false;
 
-  bool _handleDrag = false;
-
   /// Current location of the slider line.
   Point<int>? _domainCenterPoint;
 
@@ -209,8 +207,7 @@ class Slider<D> implements ChartBehavior<D> {
 
   bool _onTapTest(Point<double> chartPoint) {
     _delaySelect = eventTrigger == SelectionTrigger.longPressHold;
-    _handleDrag = tapAnywhereToMove || _sliderContainsPoint(chartPoint);
-    return _handleDrag;
+    return tapAnywhereToMove || _sliderContainsPoint(chartPoint);
   }
 
   bool _onLongPressSelect(Point<double> chartPoint) {
@@ -221,7 +218,7 @@ class Slider<D> implements ChartBehavior<D> {
   bool _onSelect(Point<double> chartPoint, [double? ignored]) {
     // Skip events that occur outside the drawArea for any series renderer.
     // If the selection is delayed (waiting for long press), then quit early.
-    if (!_handleDrag || _delaySelect) {
+    if (_delaySelect) {
       return false;
     }
 
@@ -243,8 +240,6 @@ class Slider<D> implements ChartBehavior<D> {
     if (_delaySelect) {
       return false;
     }
-
-    _handleDrag = false;
 
     // If snapToDatum is enabled, use the x position of the nearest datum
     // instead of the mouse point.
