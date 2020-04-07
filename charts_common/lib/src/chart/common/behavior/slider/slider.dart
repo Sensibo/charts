@@ -386,7 +386,7 @@ class Slider<D> implements ChartBehavior<D> {
       }
 
       // Clamp the position to the edge of the viewport.
-      positionY = clamp(positionY, viewBounds.top, viewBounds.bottom);
+      positionY = clamp(positionY, viewBounds.top, viewBounds.bottom).toDouble();
 
       final positionXChanged = (_previousDomainCenterPoint != null &&
           positionX != _previousDomainCenterPoint.x);
