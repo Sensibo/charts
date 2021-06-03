@@ -81,9 +81,9 @@ class Slider<D> extends ChartBehavior<D> {
   /// Renderer for the handle. Defaults to a rectangle.
   final common.SymbolRenderer? handleRenderer;
 
-  bool tapAnywhereToMove;
+  bool? tapAnywhereToMove;
 
-  common.Slider commonBehavior;
+  common.Slider? commonBehavior;
 
   Slider._internal(
       {required this.eventTrigger,
@@ -93,7 +93,7 @@ class Slider<D> extends ChartBehavior<D> {
       required this.snapToDatum,
       this.style,
       this.handleRenderer,
-      this.desiredGestures,
+      required this.desiredGestures,
       this.layoutPaintOrder,
       this.tapAnywhereToMove,
       this.commonBehavior});
@@ -128,10 +128,11 @@ class Slider<D> extends ChartBehavior<D> {
       bool snapToDatum = false,
       common.SliderStyle? style,
       int layoutPaintOrder = common.LayoutViewPaintOrder.slider,
-      bool tapAnywhereToMove = false,
-      common.Slider commonBehavior}) {
+      bool? tapAnywhereToMove,
+      common.Slider? commonBehavior}) {
     eventTrigger ??= common.SelectionTrigger.tapAndDrag;
     handleRenderer ??= new common.RectSymbolRenderer();
+    tapAnywhereToMove ??= false;
     // Default the handle size large enough to tap on a mobile device.
     style ??= new common.SliderStyle(handleSize: Rectangle<int>(0, 0, 20, 30));
     return new Slider._internal(
@@ -183,7 +184,7 @@ class Slider<D> extends ChartBehavior<D> {
       style: style,
       tapAnywhereToMove: tapAnywhereToMove
     );
-    return commonBehavior;
+    return commonBehavior! as common.Slider<D>;
   }
 
   @override

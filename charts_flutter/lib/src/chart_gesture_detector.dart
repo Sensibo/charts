@@ -135,7 +135,7 @@ class ChartGestureDetector {
     final localPosition = d.localPosition;
     _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
 
-    _isDragging = container.gestureProxy.onDragStart(_lastTapPoint);
+    _isDragging = container.gestureProxy.onDragStart(_lastTapPoint!);
   }
 
   void onDragUpdate(DragUpdateDetails d) {
@@ -147,7 +147,7 @@ class ChartGestureDetector {
     final localPosition = d.localPosition;
     _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
 
-    container.gestureProxy.onDragUpdate(_lastTapPoint, 1);
+    container.gestureProxy.onDragUpdate(_lastTapPoint!, 1);
   }
 
   void onScaleEnd(ScaleEndDetails d) {

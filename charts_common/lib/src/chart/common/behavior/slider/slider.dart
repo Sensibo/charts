@@ -117,7 +117,7 @@ class Slider<D> implements ChartBehavior<D> {
   /// This should be set any time the state of the slider has changed.
   SliderListenerDragState? _dragStateToFireOnPostRender;
 
-  bool tapAnywhereToMove;
+  final bool _tapAnywhereToMove;
 
   /// Constructs a [Slider].
   ///
@@ -152,12 +152,13 @@ class Slider<D> implements ChartBehavior<D> {
       SliderListenerCallback<D>? onChangeCallback,
       String? roleId,
       this.snapToDatum = false,
-      SliderStyle style,
-      this.tapAnywhereToMove = false,
+      SliderStyle? style,
+      bool? tapAnywhereToMove,
       this.layoutPaintOrder = LayoutViewPaintOrder.slider})
       : _handleRenderer = handleRenderer ?? RectSymbolRenderer(),
         _roleId = roleId ?? '',
         _style = style ?? SliderStyle(),
+        _tapAnywhereToMove = tapAnywhereToMove ?? false,
         _domainValue = initialDomainValue {
     if (_domainValue != null) {
       _dragStateToFireOnPostRender = SliderListenerDragState.initial;
@@ -207,7 +208,7 @@ class Slider<D> implements ChartBehavior<D> {
 
   bool _onTapTest(Point<double> chartPoint) {
     _delaySelect = eventTrigger == SelectionTrigger.longPressHold;
-    return tapAnywhereToMove || _sliderContainsPoint(chartPoint);
+    return _tapAnywhereToMove || _sliderContainsPoint(chartPoint);
   }
 
   bool _onLongPressSelect(Point<double> chartPoint) {
