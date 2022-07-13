@@ -340,8 +340,13 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
             break;
         }
       } else if (calculatedLabelPosition == BarLabelPosition.outside) {
-        if (measure < 0 &&
-            labelPlacement == BarLabelPlacement.opposeAxisBaseline) {
+        bool alignRight = false;
+        if (measure < 0 && labelPlacement == BarLabelPlacement.opposeAxisBaseline) {
+          alignRight = true;
+        }
+        alignRight = rtl ? !alignRight : alignRight;
+
+        if (alignRight) {
           labelX = bounds.left - labelPadding;
           labelElement.textDirection = TextDirection.rtl;
         } else {
