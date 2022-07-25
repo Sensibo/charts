@@ -17,7 +17,7 @@ dependencies:
   charts_common:
     git:
       url: https://github.com/Sensibo/charts.git
-      ref: master
+      ref: smooth_line
       path: charts_common
   collection: ^1.14.5
   flutter:
